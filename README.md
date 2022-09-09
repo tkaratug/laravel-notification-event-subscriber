@@ -1,68 +1,56 @@
-# :package_description
+![image](https://banners.beyondco.de/Laravel%20Notification%20Event%20Subscriber.png?theme=light&packageManager=composer+require&packageName=tkaratug%2Flaravel-notification-event-subscriber&pattern=architect&style=style_1&description=&md=1&showWatermark=0&fontSize=100px&images=bell&widths=200&heights=200)
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/:vendor_slug/:package_slug/run-tests?label=tests)](https://github.com/:vendor_slug/:package_slug/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/:vendor_slug/:package_slug/Fix%20PHP%20code%20style%20issues?label=code%20style)](https://github.com/:vendor_slug/:package_slug/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
-<!--delete-->
----
-This repo can be used to scaffold a Laravel package. Follow these steps to get started:
+# Laravel Notification Event Subscriber
 
-1. Press the "Use this template" button at the top of this repo to create a new repo with the contents of this skeleton.
-2. Run "php ./configure.php" to run a script that will replace all placeholders throughout all the files.
-3. Have fun creating your package.
-4. If you need help creating a package, consider picking up our <a href="https://laravelpackage.training">Laravel Package Training</a> video course.
----
-<!--/delete-->
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/tkaratug/laravel-notification-event-subscriber.svg?style=flat-square)](https://packagist.org/packages/tkaratug/laravel-notification-event-subscriber)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/tkaratug/laravel-notification-event-subscriber/run-tests?label=tests)](https://github.com/tkaratug/laravel-notification-event-subscriber/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/tkaratug/laravel-notification-event-subscriber/Fix%20PHP%20code%20style%20issues?label=code%20style)](https://github.com/tkaratug/laravel-notification-event-subscriber/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/tkaratug/laravel-notification-event-subscriber.svg?style=flat-square)](https://packagist.org/packages/tkaratug/laravel-notification-event-subscriber)
 
-## Support us
+This package allows you to run any kind of actions while a notification is being sent or after it has been sent using `onSent()` and `onSending()` methods.
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/:package_name.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/:package_name)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+It registers an event subscriber `NotificationEventSubscriber` and listens to the `NotificationSent` and `NotificationSending` events of Laravel.
+When one of them is fired, the event subscriber runs a defined method according to the event.
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require :vendor_slug/:package_slug
-```
-
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag=":package_slug-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag=":package_slug-config"
-```
-
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag=":package_slug-views"
+composer require tkaratug/laravel-notification-event-subscriber
 ```
 
 ## Usage
 
 ```php
-$variable = new VendorName\Skeleton();
-echo $variable->echoPhrase('Hello, VendorName!');
+namespace App\Notifications;
+
+use Illuminate\Notifications\Messages\MailMessage;
+
+class UserRegisteredNotification extends Notification
+{   
+    public function via($notifiable): array
+    {
+        return ['mail'];
+    }
+    
+    public function toMail($notifiable): MailMessage
+    {
+        return (new MailMessage)
+                    ->greeting('foo')
+                    ->line('bar');
+    }
+    
+    public function onSending($channel): void
+    {
+        Log::info($this::class . ' is being sent via ' . $channel);        
+    }
+    
+    public function onSent($channel): void
+    {
+        Log::info($this::class . ' has been sent via ' . $channel);
+    }
+}
 ```
 
 ## Testing
@@ -85,7 +73,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [:author_name](https://github.com/:author_username)
+- [Turan Karatuğ](https://github.com/tkaratug)
 - [All Contributors](../../contributors)
 
 ## License
