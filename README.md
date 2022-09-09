@@ -26,6 +26,7 @@ composer require tkaratug/laravel-notification-event-subscriber
 namespace App\Notifications;
 
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\Log;
 
 class UserRegisteredNotification extends Notification
 {   
