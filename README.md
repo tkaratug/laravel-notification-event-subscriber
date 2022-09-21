@@ -42,12 +42,12 @@ class UserRegisteredNotification extends Notification
                     ->line('bar');
     }
     
-    public function onSending($channel): void
+    public function onSending(string $channel, $response = null): void
     {
         Log::info($this::class . ' is being sent via ' . $channel);        
     }
     
-    public function onSent($channel): void
+    public function onSent(string $channel): void
     {
         Log::info($this::class . ' has been sent via ' . $channel);
     }

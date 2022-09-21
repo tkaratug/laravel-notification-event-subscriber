@@ -19,7 +19,7 @@ class NotificationEventSubscriber
     public function handleNotificationSent(NotificationSent $event): void
     {
         if (method_exists($event->notification, 'onSent')) {
-            $event->notification->onSent($event->channel);
+            $event->notification->onSent($event->channel, $event->response);
         }
     }
 
