@@ -36,7 +36,7 @@ class TestNotification extends \Illuminate\Notifications\Notification
         return new MailMessage;
     }
 
-    public function onSent(string $channel, $response): void
+    public function onSent(string $channel, $response = null): void
     {
         Log::info('notification has been sent');
     }
