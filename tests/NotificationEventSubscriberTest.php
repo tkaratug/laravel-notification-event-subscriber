@@ -38,11 +38,11 @@ class TestNotification extends \Illuminate\Notifications\Notification
 
     public function onSent($notifiable, $channel, $response = null): void
     {
-        Log::info('notification has been sent to ' . $notifiable->routeNotificationFor($channel, $this) . " via {$channel}");
+        Log::info('notification has been sent to '.$notifiable->routeNotificationFor($channel, $this)." via {$channel}");
     }
 
     public function onSending($notifiable, $channel): void
     {
-        Log::info('notification is being sent to ' . $notifiable->routeNotificationFor($channel, $this) . " via {$channel}");
+        Log::info('notification is being sent to '.$notifiable->routeNotificationFor($channel, $this)." via {$channel}");
     }
 }
