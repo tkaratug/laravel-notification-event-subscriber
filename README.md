@@ -42,14 +42,16 @@ class UserRegisteredNotification extends Notification
                     ->line('bar');
     }
     
-    public function onSending(string $channel, $response = null): void
+    public function onSending($notifiable, string $channel, $response = null): void
     {
-        Log::info($this::class . ' is being sent via ' . $channel);        
+        $to = $notifiable->routeNotificationFor($channel, $this);
+        Log::info($this::class . ' to ' . $to . ' is being sent via ' . $channel);        
     }
     
-    public function onSent(string $channel): void
+    public function onSent($notifiable, string $channel): void
     {
-        Log::info($this::class . ' has been sent via ' . $channel);
+        $to = $notifiable->routeNotificationFor($channel, $this);
+        Log::info($this::class . ' to ' . $to . ' has been sent via ' . $channel);
     }
 }
 ```

@@ -16,8 +16,8 @@ class NotificationEventSubscriberTest extends TestCase
     public function it_listens_notification_sent_event(): void
     {
         // Assert
-        Log::shouldReceive('info')->with('notification has been sent')->once();
-        Log::shouldReceive('info')->with('notification is being sent')->once();
+        Log::shouldReceive('info')->with('notification has been sent to foo@bar.com')->once();
+        Log::shouldReceive('info')->with('notification is being sent to foo@bar.com')->once();
 
         // Act
         Notification::route('mail', 'foo@bar.com')->notify(new TestNotification());
@@ -36,13 +36,15 @@ class TestNotification extends \Illuminate\Notifications\Notification
         return new MailMessage;
     }
 
-    public function onSent(string $channel, $response = null): void
+    public function onSent($notifiable, string $channel, $response = null): void
     {
-        Log::info('notification has been sent');
+        $to = $notifiable->routeNotificationFor($channel, $this);
+        Log::info('notification has been sent to ' . $to);
     }
 
-    public function onSending(string $channel): void
+    public function onSending($notifiable, string $channel): void
     {
-        Log::info('notification is being sent');
+        $to = $notifiable->routeNotificationFor($channel, $this);
+        Log::info('notification is being sent to ' . $to);
     }
 }
