@@ -19,7 +19,7 @@ class NotificationEventSubscriber
     public function handleNotificationSent(NotificationSent $event): void
     {
         if (method_exists($event->notification, 'onSent')) {
-            $event->notification->onSent($event->channel, $event->response);
+            $event->notification->onSent($event->notifiable, $event->channel, $event->response);
         }
     }
 
@@ -32,7 +32,7 @@ class NotificationEventSubscriber
     public function handleNotificationSending(NotificationSending $event): void
     {
         if (method_exists($event->notification, 'onSending')) {
-            $event->notification->onSending($event->channel);
+            $event->notification->onSending($event->notifiable, $event->channel);
         }
     }
 
