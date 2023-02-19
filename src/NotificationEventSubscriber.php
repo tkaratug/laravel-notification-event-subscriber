@@ -12,9 +12,6 @@ class NotificationEventSubscriber
 {
     /**
      * Executes `onSent()` method in the notication.
-     *
-     * @param  \Illuminate\Notifications\Events\NotificationSent  $event
-     * @return void
      */
     public function handleNotificationSent(NotificationSent $event): void
     {
@@ -25,9 +22,6 @@ class NotificationEventSubscriber
 
     /**
      * Executes `onSending()` method in the notification.
-     *
-     * @param  \Illuminate\Notifications\Events\NotificationSending  $event
-     * @return void
      */
     public function handleNotificationSending(NotificationSending $event): void
     {
@@ -38,9 +32,6 @@ class NotificationEventSubscriber
 
     /**
      * The subscriber classes to register.
-     *
-     * @param  \Illuminate\Events\Dispatcher  $events
-     * @return array
      */
     public function subscribe(Dispatcher $events): array
     {
