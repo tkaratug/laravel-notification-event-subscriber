@@ -44,4 +44,4 @@ jobs:
         run: composer install --no-progress --no-ansi --profile --no-interaction --no-scripts --prefer-dist
 
       - name: Execute tests
-        run: vendor/bin/phpunit --testdox --colors=always --exclude-group skipped
+        run: vendor/bin/phpunit
