@@ -20,7 +20,7 @@ class NotificationEventSubscriberTest extends TestCase
         Log::shouldReceive('info')->with('notification is being sent to foo@bar.com via mail')->once();
 
         // Act
-        Notification::route('mail', 'foo@bar.com')->notify(new TestNotification());
+        Notification::route('mail', 'foo@bar.com')->notify(new TestNotification);
     }
 }
 
