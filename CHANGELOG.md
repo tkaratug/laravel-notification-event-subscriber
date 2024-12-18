@@ -2,6 +2,9 @@
 
 All notable changes to `laravel-notification-event-subscriber` will be documented in this file.
 
+## 1.3.0 - 2024-12-18
+- Added Laravel 11 and PHP 8.3 supports.
+
 ## 1.2.0 - 2022-09-27
 - Added `$notifiable` parameter of the `NotificationSent` and `NotificationSending` events to `onSent()` and `enSending()` methods.
 
